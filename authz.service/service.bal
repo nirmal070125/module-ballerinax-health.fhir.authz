@@ -84,11 +84,3 @@ service / on new http:Listener(9090) {
         return authzPrivilegeUsers(authzRequest);
     }
 }
-
-isolated function getClaimValue(string claimName, AuthzRequest payload) returns anydata|error {
-    r4:JWT? & readonly jwt = payload.fhirSecurity.jwt;
-    if (jwt is r4:JWT && jwt.payload.hasKey(claimName)) {
-        return jwt.payload[claimName];
-    }
-    return error("Invalid JWT");
-}

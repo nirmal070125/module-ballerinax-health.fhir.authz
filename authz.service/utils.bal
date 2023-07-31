@@ -14,6 +14,8 @@
 // specific language governing permissions and limitations
 // under the License.
 
+import ballerinax/health.fhir.r4;
+
 // start of - records related to the data model 
 type PatientTable record {
     string patientId;
@@ -76,4 +78,12 @@ isolated function authorizePrivilegeUsers(AuthzRequest authzRequest) returns Aut
         }
     }
     return {isAuthorized: false};
+}
+
+isolated function getClaimValue(string claimName, AuthzRequest payload) returns anydata|error {
+    r4:JWT? & readonly jwt = payload.fhirSecurity.jwt;
+    if (jwt is r4:JWT && jwt.payload.hasKey(claimName)) {
+        return jwt.payload[claimName];
+    }
+    return error("Invalid JWT");
 }
