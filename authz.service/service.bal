@@ -49,8 +49,8 @@ type AuthzResponse record {
 
 // end of - records related to the API
 
-const string PATIENT_ID_CLAIM = "http://wso2.org/claims/patient";
-const string PRACTITIONER_ID_CLAIM = "http://wso2.org/claims/practitioner";
+configurable string PATIENT_ID_CLAIM = "patient";
+configurable string PRACTITIONER_ID_CLAIM = "practitioner";
 
 // This service is intended to be called by FHIR API templates released by the WSO2.
 // However, there is no restriction to use this service with any other FHIR API implementation.

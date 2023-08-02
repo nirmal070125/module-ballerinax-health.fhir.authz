@@ -21,7 +21,7 @@ function testAuthorizingWithAPatient() {
                     "exp": 1675923588,
                     "iat": 1675919988,
                     "jti": "1a055f11-a384-4fa0-9e9f-30932b63c9a0",
-                    "http://wso2.org/claims/patient": "123",
+                    "patient": "123",
                     "http://wso2.org/claims/apiname": "PatientApi",
                     "http://wso2.org/claims/version": "1.0.0",
                     "http://wso2.org/claims/keytype": "PRODUCTION",
@@ -32,7 +32,7 @@ function testAuthorizingWithAPatient() {
             }
         },
         "patientId": "123",
-        privilegedClaimUrl: "http://wso2.org/claims/priviledge"
+        privilegedClaimUrl: "http://wso2.org/claims/privileged"
     };
     AuthzResponse|error response = testClient->/authorize.post(authzRequest);
     test:assertEquals(response, {isAuthorized: true, scope: PATIENT});
@@ -55,7 +55,7 @@ function testAuthorizingWithAPractitioner() {
                     "exp": 1675923588,
                     "iat": 1675919988,
                     "jti": "1a055f11-a384-4fa0-9e9f-30932b63c9a0",
-                    "http://wso2.org/claims/practitioner": "1",
+                    "practitioner": "1",
                     "http://wso2.org/claims/apiname": "PatientApi",
                     "http://wso2.org/claims/version": "1.0.0",
                     "http://wso2.org/claims/keytype": "PRODUCTION",
@@ -66,14 +66,14 @@ function testAuthorizingWithAPractitioner() {
             }
         },
         "patientId": "1",
-        privilegedClaimUrl: "http://wso2.org/claims/priviledge"
+        privilegedClaimUrl: "http://wso2.org/claims/privileged"
     };
     AuthzResponse|error response = testClient->/authorize.post(authzRequest);
     test:assertEquals(response, {isAuthorized: true, scope: PRACTITIONER});
 }
 
 @test:Config {}
-function testAuthorizingWithAPriviledgedUser() {
+function testAuthorizingWithAPrivilegedUser() {
     AuthzRequest authzRequest = {
         "fhirSecurity": {
             "securedAPICall": true,
@@ -89,7 +89,7 @@ function testAuthorizingWithAPriviledgedUser() {
                     "exp": 1675923588,
                     "iat": 1675919988,
                     "jti": "1a055f11-a384-4fa0-9e9f-30932b63c9a0",
-                    "http://wso2.org/claims/priviledge": "true",
+                    "privileged": "true",
                     "http://wso2.org/claims/apiname": "PatientApi",
                     "http://wso2.org/claims/version": "1.0.0",
                     "http://wso2.org/claims/keytype": "PRODUCTION",
@@ -100,14 +100,14 @@ function testAuthorizingWithAPriviledgedUser() {
             }
         },
         "patientId": "123",
-        privilegedClaimUrl: "http://wso2.org/claims/priviledge"
+        privilegedClaimUrl: "privileged"
     };
     AuthzResponse|error response = testClient->/authorize.post(authzRequest);
     test:assertEquals(response, {isAuthorized: true, scope: PRIVILEGED});
 }
 
 @test:Config {}
-function testAuthorizingWithAPriviledgedUserForAllPatientData() {
+function testAuthorizingWithAPrivilegedUserForAllPatientData() {
     AuthzRequest authzRequest = {
         "fhirSecurity": {
             "securedAPICall": true,
@@ -123,7 +123,7 @@ function testAuthorizingWithAPriviledgedUserForAllPatientData() {
                     "exp": 1675923588,
                     "iat": 1675919988,
                     "jti": "1a055f11-a384-4fa0-9e9f-30932b63c9a0",
-                    "http://wso2.org/claims/priviledge": "true",
+                    "http://abc.org/claims/privileged": "true",
                     "http://wso2.org/claims/apiname": "PatientApi",
                     "http://wso2.org/claims/version": "1.0.0",
                     "http://wso2.org/claims/keytype": "PRODUCTION",
@@ -133,7 +133,7 @@ function testAuthorizingWithAPriviledgedUserForAllPatientData() {
                 }
             }
         },
-        privilegedClaimUrl: "http://wso2.org/claims/priviledge"
+        privilegedClaimUrl: "http://abc.org/claims/privileged"
     };
     AuthzResponse|error response = testClient->/authorize.post(authzRequest);
     test:assertEquals(response, {isAuthorized: true, scope: PRIVILEGED});
@@ -157,7 +157,7 @@ function testAuthorizingWithADifferentPatient() {
                     "exp": 1675923588,
                     "iat": 1675919988,
                     "jti": "1a055f11-a384-4fa0-9e9f-30932b63c9a0",
-                    "http://wso2.org/claims/patient": "1234",
+                    "patient": "1234",
                     "http://wso2.org/claims/apiname": "PatientApi",
                     "http://wso2.org/claims/version": "1.0.0",
                     "http://wso2.org/claims/keytype": "PRODUCTION",
@@ -168,7 +168,7 @@ function testAuthorizingWithADifferentPatient() {
             }
         },
         "patientId": "123",
-        privilegedClaimUrl: "http://wso2.org/claims/priviledge"
+        privilegedClaimUrl: "http://wso2.org/claims/privileged"
     };
     AuthzResponse|error response = testClient->/authorize.post(authzRequest);
     test:assertEquals(response, {isAuthorized: false});
@@ -191,7 +191,7 @@ function testAuthorizingWithAnUnauthorizedPractitioner() {
                     "exp": 1675923588,
                     "iat": 1675919988,
                     "jti": "1a055f11-a384-4fa0-9e9f-30932b63c9a0",
-                    "http://wso2.org/claims/practitioner": "4",
+                    "practitioner": "4",
                     "http://wso2.org/claims/apiname": "PatientApi",
                     "http://wso2.org/claims/version": "1.0.0",
                     "http://wso2.org/claims/keytype": "PRODUCTION",
@@ -202,14 +202,14 @@ function testAuthorizingWithAnUnauthorizedPractitioner() {
             }
         },
         "patientId": "1",
-        privilegedClaimUrl: "http://wso2.org/claims/priviledge"
+        privilegedClaimUrl: "http://wso2.org/claims/privileged"
     };
     AuthzResponse|error response = testClient->/authorize.post(authzRequest);
     test:assertEquals(response, {isAuthorized: false});
 }
 
 @test:Config {}
-function testAuthorizingWithAnUnpriviledgedUser() {
+function testAuthorizingWithAnUnprivilegedUser() {
     AuthzRequest authzRequest = {
         "fhirSecurity": {
             "securedAPICall": true,
@@ -235,7 +235,7 @@ function testAuthorizingWithAnUnpriviledgedUser() {
             }
         },
         "patientId": "123",
-        privilegedClaimUrl: "http://wso2.org/claims/priviledge"
+        privilegedClaimUrl: "http://wso2.org/claims/privileged"
     };
     AuthzResponse|error response = testClient->/authorize.post(authzRequest);
     test:assertEquals(response, {isAuthorized: false});
@@ -255,7 +255,7 @@ function testAuthorizingWithAnUnpriviledgedUser() {
                     "exp": 1675923588,
                     "iat": 1675919988,
                     "jti": "1a055f11-a384-4fa0-9e9f-30932b63c9a0",
-                    "http://wso2.org/claims/priviledge": "false",
+                    "http://wso2.org/claims/privileged": "false",
                     "http://wso2.org/claims/apiname": "PatientApi",
                     "http://wso2.org/claims/version": "1.0.0",
                     "http://wso2.org/claims/keytype": "PRODUCTION",
@@ -266,14 +266,14 @@ function testAuthorizingWithAnUnpriviledgedUser() {
             }
         },
         "patientId": "123",
-        privilegedClaimUrl: "http://wso2.org/claims/priviledge"
+        privilegedClaimUrl: "http://wso2.org/claims/privileged"
     };
     response = testClient->/authorize.post(authzRequest);
     test:assertEquals(response, {isAuthorized: false});
 }
 
 @test:Config {}
-function testAuthorizingWithAnUnpriviledgedUserForAllPatientData() {
+function testAuthorizingWithAnUnprivilegedUserForAllPatientData() {
     AuthzRequest authzRequest = {
         "fhirSecurity": {
             "securedAPICall": true,
@@ -289,7 +289,7 @@ function testAuthorizingWithAnUnpriviledgedUserForAllPatientData() {
                     "exp": 1675923588,
                     "iat": 1675919988,
                     "jti": "1a055f11-a384-4fa0-9e9f-30932b63c9a0",
-                    "http://wso2.org/claims/patient": "1234",
+                    "patient": "1234",
                     "http://wso2.org/claims/apiname": "PatientApi",
                     "http://wso2.org/claims/version": "1.0.0",
                     "http://wso2.org/claims/keytype": "PRODUCTION",
@@ -299,7 +299,7 @@ function testAuthorizingWithAnUnpriviledgedUserForAllPatientData() {
                 }
             }
         },
-        privilegedClaimUrl: "http://wso2.org/claims/priviledge"
+        privilegedClaimUrl: "http://wso2.org/claims/privileged"
     };
     AuthzResponse|error response = testClient->/authorize.post(authzRequest);
     test:assertEquals(response, {isAuthorized: false});

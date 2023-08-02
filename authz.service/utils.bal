@@ -13,8 +13,10 @@
 // KIND, either express or implied.  See the License for the
 // specific language governing permissions and limitations
 // under the License.
-
 import ballerinax/health.fhir.r4;
+
+// This is done ONLY for reference and by no means for a production use case. 
+// This use sample in-memory data.
 
 // start of - records related to the data model 
 type PatientTable record {
